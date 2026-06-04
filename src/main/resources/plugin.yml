@@ -1,0 +1,8 @@
+name: EvolutionPlugin
+version: '${version}'
+
+main: com.helydra.evolutionPlugin.EvolutionPlugin
+api-version: '26.1.2'
+load: STARTUP
+
+authors: [ Luxels ]
