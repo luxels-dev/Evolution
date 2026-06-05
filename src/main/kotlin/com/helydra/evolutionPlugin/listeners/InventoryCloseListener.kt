@@ -1,6 +1,6 @@
 package com.helydra.evolutionPlugin.listeners
 
-import com.helydra.evolutionPlugin.utils.openedInventories
+import com.helydra.evolutionPlugin.managers.openedInventories
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
