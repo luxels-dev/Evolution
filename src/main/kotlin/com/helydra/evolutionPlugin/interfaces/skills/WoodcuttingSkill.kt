@@ -9,7 +9,7 @@ import org.bukkit.Material
 class WoodcuttingSkill : Skill {
     override val name = "Woodcutting"
     override val id = "woodcutting"
-    override val materialIcon = Material.DIAMOND_PICKAXE
+    override val materialIcon = Material.DIAMOND_AXE
     override val description = listOf(mm("<gray>Cut trees"))
     override val attributes = listOf<SkillAttribute>()
     override val spells = listOf<SkillSpell>()
