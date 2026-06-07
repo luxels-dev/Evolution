@@ -1,4 +1,4 @@
-package com.helydra.evolutionPlugin.listeners
+package com.helydra.evolutionPlugin.listeners.inventory
 
 import com.helydra.evolutionPlugin.managers.openedInventories
 import org.bukkit.entity.Player

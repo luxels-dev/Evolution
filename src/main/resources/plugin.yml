@@ -6,3 +6,7 @@ api-version: '26.1.2'
 load: STARTUP
 
 authors: [ Luxels ]
+
+commands:
+  skill:
+    description: Open the skill interface

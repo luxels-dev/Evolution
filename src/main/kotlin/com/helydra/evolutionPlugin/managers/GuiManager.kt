@@ -8,18 +8,17 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import kotlin.collections.iterator
 import kotlin.math.ceil
 
 val openedInventories = mutableMapOf<Player, Gui>()
 
-val defaultRightPage = ItemStack(Material.PAPER).apply {
+val defaultRightPage = ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE).apply {
     val meta = itemMeta
     meta.itemName(mm("<gray>Next page"))
     itemMeta = meta
 }
 
-val defaultLeftPage = ItemStack(Material.PAPER).apply {
+val defaultLeftPage = ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE).apply {
     val meta = itemMeta
     meta.itemName(mm("<gray>Previous page"))
     itemMeta = meta
