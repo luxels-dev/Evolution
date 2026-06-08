@@ -10,3 +10,7 @@ authors: [ Luxels ]
 commands:
   skill:
     description: Open the skill interface
+  spell:
+    description: Open the spell interface
+  customgive:
+    permission: op

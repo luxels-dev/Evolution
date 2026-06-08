@@ -72,7 +72,7 @@ interface Skill {
         levelingAttempt(player)
     }
 
-    fun experienceUp(level: Int) = (100.0 + 35.0 * (level-1) + 20 * ((level-1) + (kotlin.math.exp(-0.5 * (level-1)) - 1.0) / 0.5)).toInt()
+    fun experienceUp(level: Int) = (500.0 + 35.0 * (level-1) + 20 * ((level-1) + (kotlin.math.exp(-0.5 * (level-1)) - 1.0) / 0.5)).toInt()
     fun experienceUp(player: Player) = level(player)?.let { experienceUp(it) }
 
     fun points(player: Player): Int? = data.get<Int>("skill.$id.points.${player.uniqueId}")
@@ -85,6 +85,7 @@ interface Skill {
 
     fun levelingAttempt(player: Player): Boolean {
         var didEdit = false
+        val beforeLevel = level(player) ?: return false
         while ((experience(player) ?: return false) >= (experienceUp(player) ?: return false)) {
             addExperience(player, -(experienceUp(player) ?: return false))
             levelUp(player)
@@ -97,6 +98,8 @@ interface Skill {
             addPoints(player, pointsToAdd)
             didEdit = true
         }
+        val newLevel = level(player) ?: return false
+        if (beforeLevel < newLevel) player.sendMessage(mm("<color:#C2E4FF>You leveled up your <color:#C2FFFC>$name<color:#C2E4FF> skill (<color:#C2C5FF>$beforeLevel<color:#C2E4FF> -> <color:#C2C5FF>$newLevel<color:#C2E4FF>)"))
         return didEdit
     }
 

@@ -29,7 +29,7 @@ class ItemSlot(
     val onClick: (ClickType) -> Unit
 )
 
-class Gui(
+open class Gui(
     val name: Component,
     val rows: Int,
     val slots: Map<Int, ItemSlot>,

@@ -1,6 +1,7 @@
 package com.helydra.evolutionPlugin.managers
 
 import com.helydra.evolutionPlugin.interfaces.Skill
+import com.helydra.evolutionPlugin.interfaces.SkillSpell
 import com.helydra.evolutionPlugin.interfaces.skills.*
 import com.helydra.evolutionPlugin.utils.emptyItem
 import com.helydra.evolutionPlugin.utils.mm
@@ -24,6 +25,33 @@ class SkillManager {
         BrewingSkill(),
         TradingSkill()
     )
+
+    fun spellFromId(id: String): SkillSpell? {
+        for (skill in skillList) {
+            for (spell in skill.spells) {
+                if (spell.id == id) return spell
+            }
+        }
+        return null
+    }
+
+    fun skillFromId(id: String): Skill? {
+        for (skill in skillList) {
+            if (skill.id == id) return skill
+        }
+        return null
+    }
+
+    fun spellsOfPlayer(player: Player): List<SkillSpell> {
+        val list = mutableListOf<SkillSpell>()
+        for (skill in skillList) {
+            for (spell in skill.spells) {
+                val level = spell.level(player) ?: 0
+                if (level > 0) list.add(spell)
+            }
+        }
+        return list
+    }
 
     fun gui(player: Player): Gui {
         val title = mm("Skills Interface")
@@ -99,8 +127,8 @@ class SkillManager {
             31, 32, 33
         )
         val attributeItems = skill.attributes.map { attribute -> ItemSlot(attribute.icon(player)) { clickType ->
-            if (clickType.isLeftClick) attribute.buyAttempt(player)
-            else if (clickType.isRightClick) attribute.enableAttempt(player)
+            if (clickType.isLeftClick && attribute.buyAttempt(player)) player.openGui(attributeGui(player, skill))
+            else if (clickType.isRightClick && attribute.enableAttempt(player)) player.openGui(attributeGui(player, skill))
         } }
         slots[19] = ItemSlot(skill.icon(player)) {
             player.openGui(skillGui(player, skill))
@@ -131,7 +159,7 @@ class SkillManager {
             31, 32, 33
         )
         val spellItems = skill.spells.map { spell -> ItemSlot(spell.icon(player)) { clickType ->
-            if (clickType.isLeftClick) spell.buyAttempt(player)
+            if (clickType.isLeftClick && spell.buyAttempt(player)) player.openGui(spellGui(player, skill))
         } }
         slots[19] = ItemSlot(skill.icon(player)) {
             player.openGui(skillGui(player, skill))

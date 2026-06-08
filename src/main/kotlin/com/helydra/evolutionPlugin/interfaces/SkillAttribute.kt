@@ -67,11 +67,12 @@ interface SkillAttribute {
         return true
     }
 
-    fun enableAttempt(player: Player) {
-        val level = level(player) ?: return
-        if (level > 0) {
-            toggleEnabled(player)
-        }
+    fun enableAttempt(player: Player): Boolean {
+        val level = level(player) ?: return false
+        if (level <= 0) return false
+        toggleEnabled(player)
+        check(player)
+        return true
     }
 
     fun verify(player: Player) {

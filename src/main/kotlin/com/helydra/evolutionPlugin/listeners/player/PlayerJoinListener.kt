@@ -12,6 +12,14 @@ class PlayerJoinListener : Listener {
         val player = event.player
         for (skill in SkillManager().skillList) {
             skill.verify(player)
+            for (attribute in skill.attributes) {
+                attribute.verify(player)
+                attribute.check(player)
+            }
+            for (spell in skill.spells) {
+                spell.verify(player)
+            }
+            skill.levelingAttempt(player)
         }
     }
 

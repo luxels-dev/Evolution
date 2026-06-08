@@ -1,12 +1,15 @@
 package com.helydra.evolutionPlugin.utils
 
+import com.helydra.evolutionPlugin.plugin
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.inventory.meta.SkullMeta
+import org.bukkit.persistence.PersistentDataType
 
 fun ItemMeta.hideUselessInfo() {
     addItemFlags(
@@ -40,4 +43,20 @@ fun playerHead(player: Player, displayName: Component): ItemStack {
 
     item.itemMeta = meta
     return item
+}
+
+fun ItemMeta.disableCrafting() {
+    persistentDataContainer.set(NamespacedKey(plugin, "prevent_from_crafting"), PersistentDataType.BOOLEAN, true)
+}
+
+fun ItemStack?.canCraft(): Boolean {
+    if (this == null) return true
+    val meta = itemMeta ?: return true
+    return meta.persistentDataContainer.get(NamespacedKey(plugin, "prevent_from_crafting"), PersistentDataType.BOOLEAN) == null
+}
+
+fun Player.giveOrDrop(itemStack: ItemStack) {
+    for (stack in give(itemStack).leftovers()) {
+        world.dropItem(location, stack)
+    }
 }
