@@ -1,7 +1,10 @@
 package com.helydra.evolutionPlugin.utils
 
 import com.helydra.evolutionPlugin.interfaces.SkillAttribute
+import com.helydra.evolutionPlugin.managers.SkillManager
 import com.helydra.evolutionPlugin.plugin
+import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
@@ -24,7 +27,37 @@ enum class CustomSkillAttribute {
     SLAYING_EXPERIENCE,
     EXCAVATION_EXPERIENCE,
     FARMING_EXPERIENCE,
-    TREASURE_HUNTER
+    FISHING_EXPERIENCE,
+    TREASURE_HUNTER,
+    REGENERATION,
+    ARROW_DAMAGE,
+}
+
+fun initRegenLoop() {
+    plugin.server.scheduler.runTaskTimer(plugin, Runnable {
+        for (player in Bukkit.getOnlinePlayers()) {
+            val level = attributeLevel(player, CustomSkillAttribute.REGENERATION)
+            if (level > 0) player.heal(level * 0.1)
+        }
+    }, 0, 20)
+}
+
+private val movingMap = mutableMapOf<Player, Location>()
+
+fun initMovingLoop() {
+    plugin.server.scheduler.runTaskTimer(plugin, Runnable {
+        for (player in Bukkit.getOnlinePlayers()) {
+            val oldLoc = movingMap[player]
+            if (oldLoc != null) {
+                val newLoc = player.location
+                if (newLoc.world == oldLoc.world) {
+                    val distance = oldLoc.distance(newLoc).toInt()
+                    SkillManager().skillFromId("adventuring")?.addExperience(player, distance)
+                }
+            }
+            movingMap[player] = player.location
+        }
+    }, 0, 20)
 }
 
 val customAttributeMap = CustomSkillAttribute.entries.associateWith { mutableMapOf<Player, Int>() }

@@ -6,6 +6,7 @@ import com.helydra.evolutionPlugin.commands.SpellCommand
 import com.helydra.evolutionPlugin.data.DataManager
 import com.helydra.evolutionPlugin.listeners.block.*
 import com.helydra.evolutionPlugin.listeners.entity.EntityChangeBlockListener
+import com.helydra.evolutionPlugin.listeners.entity.EntityDamageListener
 import com.helydra.evolutionPlugin.listeners.entity.EntityDeathListener
 import com.helydra.evolutionPlugin.listeners.entity.EntityExplodeListener
 import com.helydra.evolutionPlugin.listeners.entity.EntitySpawnListener
@@ -18,6 +19,8 @@ import com.helydra.evolutionPlugin.listeners.player.PlayerJoinListener
 import com.helydra.evolutionPlugin.listeners.player.PlayerSwapHandItemsListener
 import com.helydra.evolutionPlugin.listeners.player.PlayerToggleSneakListener
 import com.helydra.evolutionPlugin.managers.SpellManager
+import com.helydra.evolutionPlugin.utils.initMovingLoop
+import com.helydra.evolutionPlugin.utils.initRegenLoop
 import org.bukkit.plugin.java.JavaPlugin
 
 lateinit var plugin: EvolutionPlugin
@@ -64,6 +67,10 @@ class EvolutionPlugin : JavaPlugin() {
         server.pluginManager.registerEvents(PlayerInteractListener(), this)
         server.pluginManager.registerEvents(PlayerToggleSneakListener(), this)
         server.pluginManager.registerEvents(PlayerHarvestBlockListener(), this)
+        server.pluginManager.registerEvents(EntityDamageListener(), this)
+
+        initRegenLoop()
+        initMovingLoop()
     }
 
     override fun onDisable() {
