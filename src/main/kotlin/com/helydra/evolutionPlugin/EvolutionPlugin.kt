@@ -14,6 +14,7 @@ import com.helydra.evolutionPlugin.listeners.inventory.CraftItemListener
 import com.helydra.evolutionPlugin.listeners.inventory.InventoryClickListener
 import com.helydra.evolutionPlugin.listeners.inventory.InventoryCloseListener
 import com.helydra.evolutionPlugin.listeners.inventory.PrepareItemCraftListener
+import com.helydra.evolutionPlugin.listeners.player.PlayerFishListener
 import com.helydra.evolutionPlugin.listeners.player.PlayerInteractListener
 import com.helydra.evolutionPlugin.listeners.player.PlayerJoinListener
 import com.helydra.evolutionPlugin.listeners.player.PlayerSwapHandItemsListener
@@ -68,6 +69,7 @@ class EvolutionPlugin : JavaPlugin() {
         server.pluginManager.registerEvents(PlayerToggleSneakListener(), this)
         server.pluginManager.registerEvents(PlayerHarvestBlockListener(), this)
         server.pluginManager.registerEvents(EntityDamageListener(), this)
+        server.pluginManager.registerEvents(PlayerFishListener(), this)
 
         initRegenLoop()
         initMovingLoop()

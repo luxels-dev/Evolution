@@ -81,6 +81,6 @@ class JumpBoostAdventuringSkillAttribute(override val skill: Skill) : SkillAttri
     override val maxLevel = 4
     override val pointsPerLevel = 5
     override fun check(player: Player) {
-        skillAttributeCheck(player, this, Attribute.JUMP_STRENGTH, AttributeModifier.Operation.MULTIPLY_SCALAR_1) { level -> level * 0.5 + 1 }
+        skillAttributeCheck(player, this, Attribute.JUMP_STRENGTH, AttributeModifier.Operation.ADD_NUMBER) { level -> level * 0.02 }
     }
 }

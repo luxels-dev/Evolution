@@ -35,8 +35,8 @@ class ExcavationExperienceExcavationSkillAttribute(override val skill: Skill) : 
         mm("<gray>gained by mining blocks breakable"),
         mm("<gray>with a shovel")
     )
-    override val maxLevel = 10
-    override val pointsPerLevel = 1
+    override val maxLevel = 2
+    override val pointsPerLevel = 8
     override fun check(player: Player) {
         checkCustomAttributes(player, CustomSkillAttribute.EXCAVATION_EXPERIENCE, this)
     }
@@ -51,7 +51,7 @@ class TreasureHunterExcavationSkillAttribute(override val skill: Skill) : SkillA
         mm("<gray>mining blocks breakable with a shovel")
     )
     override val maxLevel = 5
-    override val pointsPerLevel = 2
+    override val pointsPerLevel = 5
     override fun check(player: Player) {
         checkCustomAttributes(player, CustomSkillAttribute.TREASURE_HUNTER, this)
     }

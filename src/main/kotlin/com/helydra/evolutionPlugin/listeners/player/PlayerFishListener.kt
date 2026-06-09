@@ -11,10 +11,17 @@ class PlayerFishListener : Listener {
 
     @EventHandler
     fun onPlayerFish(event: PlayerFishEvent) {
+        // Only trigger when the player successfully catches something
+        if (event.state != PlayerFishEvent.State.CAUGHT_FISH &&
+            event.state != PlayerFishEvent.State.CAUGHT_ENTITY) return
+
         val player = event.player
         val fishExpBoost = attributeLevel(player, CustomSkillAttribute.FISHING_EXPERIENCE)
+
         event.expToDrop *= fishExpBoost
-        SkillManager().skillFromId("fishing")?.addExperience(player, (10..20).random())
+        SkillManager().skillFromId("fishing")
+            ?.addExperience(player, (10..20).random())
     }
+
 
 }

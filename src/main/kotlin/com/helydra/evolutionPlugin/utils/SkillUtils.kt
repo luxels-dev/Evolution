@@ -63,10 +63,10 @@ fun initMovingLoop() {
 val customAttributeMap = CustomSkillAttribute.entries.associateWith { mutableMapOf<Player, Int>() }
 
 fun checkCustomAttributes(player: Player, attribute: CustomSkillAttribute, skillAttribute: SkillAttribute) {
-    customAttributeMap[attribute]?.remove(player) ?: return
+    customAttributeMap[attribute]?.remove(player)
     val level = skillAttribute.level(player) ?: 0
     val enabled = skillAttribute.isEnabled(player) ?: false
     if (level > 0 && enabled) customAttributeMap[attribute]?.set(player, level)
 }
 
-fun attributeLevel(player: Player, attribute: CustomSkillAttribute): Int = customAttributeMap[attribute]?.get(player) ?: 0
+fun attributeLevel(player: Player, attribute: CustomSkillAttribute) = customAttributeMap[attribute]?.get(player) ?: 0

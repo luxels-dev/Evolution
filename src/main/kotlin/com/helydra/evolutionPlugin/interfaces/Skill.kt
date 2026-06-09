@@ -67,9 +67,12 @@ interface Skill {
     fun setExperience(player: Player, experience: Int) = data.set("skill.$id.experience.${player.uniqueId}", experience)
     fun removeExperience(player: Player) = data.remove("skill.$id.experience.${player.uniqueId}")
     fun addExperience(player: Player, experience: Int) {
+        secureAddExperience(player, experience)
+        levelingAttempt(player)
+    }
+    fun secureAddExperience(player: Player, experience: Int) {
         val beforeExperience = experience(player) ?: return
         setExperience(player, beforeExperience + experience)
-        levelingAttempt(player)
     }
 
     fun experienceUp(level: Int) = (500.0 + 35.0 * (level-1) + 20 * ((level-1) + (kotlin.math.exp(-0.5 * (level-1)) - 1.0) / 0.5)).toInt()
@@ -87,7 +90,7 @@ interface Skill {
         var didEdit = false
         val beforeLevel = level(player) ?: return false
         while ((experience(player) ?: return false) >= (experienceUp(player) ?: return false)) {
-            addExperience(player, -(experienceUp(player) ?: return false))
+            secureAddExperience(player, -(experienceUp(player) ?: return false))
             levelUp(player)
 
             val level = level(player) ?: return false

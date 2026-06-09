@@ -21,26 +21,26 @@ class BlockBreakListener : Listener {
         if (!block.isMarked()) {
             val oreExpBoost = attributeLevel(player, CustomSkillAttribute.MINING_EXPERIENCE)
             if (oreList.contains(block.type)) {
-                event.expToDrop += oreExpBoost
+                player.giveExp(oreExpBoost)
                 val oreExpPair = miningExperienceMap[block.type]
                 if (oreExpPair != null) SkillManager().skillFromId("mining")?.addExperience(player, (oreExpPair.first..oreExpPair.second).random())
             }
             val woodExpBoost = attributeLevel(player, CustomSkillAttribute.WOODCUTTING_EXPERIENCE)
             if (logList.contains(block.type)) {
-                event.expToDrop += woodExpBoost
+                player.giveExp(woodExpBoost)
                 val woodExpPair = Pair(5, 10)
                 SkillManager().skillFromId("woodcutting")?.addExperience(player, (woodExpPair.first..woodExpPair.second).random())
             }
             if ((block.isPreferredTool(ItemStack(Material.DIAMOND_SHOVEL)))) {
                 val excavationExpBoost = attributeLevel(player, CustomSkillAttribute.EXCAVATION_EXPERIENCE)
-                event.expToDrop += excavationExpBoost
+                player.giveExp(excavationExpBoost)
                 val treasureHunterLevel = attributeLevel(player, CustomSkillAttribute.TREASURE_HUNTER)
                 if (chanceOf(treasureHunterLevel, 8)) block.location.world.dropItem(block.location, getExcavationTreasure())
                 val shovelExpPair = Pair(1, 3)
                 SkillManager().skillFromId("excavation")?.addExperience(player, (shovelExpPair.first..shovelExpPair.second).random())
             }
-            addFarmingExpFromBlock(player, block)
         }
+        addFarmingExpFromBlock(player, block)
         block.mark(false)
     }
 
